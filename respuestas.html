@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>respuestas</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    background: black;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+#inicio {
+    position: absolute;
+    font-size: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="inicio">Haz clic 😈</h1>
+
+<audio id="audio" loop>
+    <source src="idiot.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let iniciado = false;
+
+document.body.addEventListener("click", () => {
+
+    if (iniciado) return;
+    iniciado = true;
+
+    let audio = document.getElementById("audio");
+
+    // 🔊 sonido duplicado (caos)
+    function reproducirCaos() {
+        for (let i = 0; i < 4; i++) {
+            let nuevoAudio = audio.cloneNode();
+            nuevoAudio.volume = 0.5;
+            nuevoAudio.play();
+        }
+    }
+
+    reproducirCaos();
+
+    // borrar texto inicial
+    let inicio = document.getElementById("inicio");
+    if (inicio) inicio.remove();
+
+    // texto spam
+    setInterval(() => {
+        let txt = document.createElement("div");
+        txt.innerText = "YOU ARE AN IDIOT 😀";
+        txt.style.position = "absolute";
+        txt.style.left = Math.random()*window.innerWidth + "px";
+        txt.style.top = Math.random()*window.innerHeight + "px";
+        document.body.appendChild(txt);
+    }, 120);
+
+    // fondo blanco/negro
+    let negro = true;
+    setInterval(() => {
+        if (negro) {
+            document.body.style.background = "white";
+            document.body.style.color = "black";
+        } else {
+            document.body.style.background = "black";
+            document.body.style.color = "white";
+        }
+        negro = !negro;
+    }, 120);
+
+    // caritas rebotando 💀
+    setInterval(() => {
+        let cara = document.createElement("div");
+        cara.innerText = "😀";
+        cara.style.position = "absolute";
+        cara.style.fontSize = "40px";
+
+        let x = Math.random() * window.innerWidth;
+        let y = Math.random() * window.innerHeight;
+        let dx = (Math.random() - 0.5) * 12;
+        let dy = (Math.random() - 0.5) * 12;
+
+        document.body.appendChild(cara);
+
+        setInterval(() => {
+            x += dx;
+            y += dy;
+
+            if (x <= 0 || x >= window.innerWidth) dx *= -1;
+            if (y <= 0 || y >= window.innerHeight) dy *= -1;
+
+            cara.style.left = x + "px";
+            cara.style.top = y + "px";
+        }, 30);
+
+    }, 400);
+
+});
+</script>
+
+</body>
+</html>
